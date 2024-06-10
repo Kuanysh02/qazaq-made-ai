@@ -2,7 +2,10 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import httpx
 from fastapi.middleware.cors import CORSMiddleware
-import uvicorn
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 app = FastAPI()
 
@@ -21,6 +24,7 @@ class TTSRequest(BaseModel):
     input: str
 
 GOOGLE_TTS_API_URL = "https://texttospeech.googleapis.com/v1beta1/text:synthesize"
+API_KEY = os.getenv("API_KEY")
 
 @app.post("/text-to-speech", response_model=TextToSpeechResponse)
 async def text_to_speech(tts_request: TTSRequest):
@@ -31,7 +35,7 @@ async def text_to_speech(tts_request: TTSRequest):
     }
 
     data = {
-        "input": {"text": tts_request.input },
+        "input": {"text": tts_request.input},
         "voice": {
             "languageCode": "en-US",
             "name": "en-US-Journey-F"
