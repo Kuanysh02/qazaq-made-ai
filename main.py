@@ -4,6 +4,7 @@ import httpx
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import os
+import uvicorn
 
 load_dotenv()
 
